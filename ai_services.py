@@ -106,10 +106,19 @@ def generate_single_image(client, model, prompt):
                 response_modalities=["IMAGE"],
             ),
         )
-        return _extract_image_from_response(response)
+        img = _extract_image_from_response(response)
+        if img is None:
+            error_details = "No image found in response."
+            if hasattr(response, "candidates") and response.candidates:
+                candidate = response.candidates[0]
+                if hasattr(candidate, "finish_reason") and candidate.finish_reason:
+                    error_details += f" Finish reason: {candidate.finish_reason}."
+            if hasattr(response, "text") and response.text:
+                error_details += f" Text response: {response.text[:200]}"
+            raise ValueError(error_details)
+        return img
     except Exception as e:
-        st.warning(f"⚠️ Error in single image generation: {e}")
-        return None
+        raise e
 
 
 def generate_images_with_gemini(
