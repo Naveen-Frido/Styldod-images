@@ -1,0 +1,18 @@
+# Streamlit secrets (contains API keys - NEVER commit)
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+venv/
+.env
+
+# App config (may contain sensitive data)
+app_config.json
+
+# IDE
+.vscode/
+.idea/
