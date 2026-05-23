@@ -102,6 +102,9 @@ def generate_single_image(client, model, prompt):
         response = client.models.generate_content(
             model=model,
             contents=[prompt],
+            config=types.GenerateContentConfig(
+                response_modalities=["IMAGE"],
+            ),
         )
         return _extract_image_from_response(response)
     except Exception as e:
@@ -192,6 +195,9 @@ def process_occupied_to_vacant(
                         ]
                     )
                 ],
+                config=types.GenerateContentConfig(
+                    response_modalities=["IMAGE"],
+                ),
             )
 
             img = _extract_image_from_response(response)
@@ -268,6 +274,9 @@ def stage_with_furniture(
                         ]
                     )
                 ],
+                config=types.GenerateContentConfig(
+                    response_modalities=["IMAGE"],
+                ),
             )
 
             img = _extract_image_from_response(response)
